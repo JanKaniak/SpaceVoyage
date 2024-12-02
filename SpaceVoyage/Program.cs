@@ -5,13 +5,15 @@ using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("PatchnoteDB");
+var PatchnoteConnectionString = builder.Configuration.GetConnectionString("PatchnoteDB");
+var UserConnectionString = builder.Configuration.GetConnectionString("UserDB");
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddDbContextFactory<PatchnoteDataContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddDbContextFactory<PatchnoteDataContext>(options => options.UseSqlite(PatchnoteConnectionString));
+builder.Services.AddDbContextFactory<UserDataContext>(options => options.UseSqlite(UserConnectionString));
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
