@@ -23,9 +23,11 @@
 
     <button type="button" class="nbt btn btn-danger" @onclick="CreateNewPatchnote">Yes</button>
 } else {
-    <div class="gridContainerFAQnNews">
+    <div class="container text-center">
         <div class="row">
-            <button type="button" class="nbt btn btn-danger" @onclick="ShowCreateForm">Danger</button>
+            <AuthorizeView Roles="Administrator">
+                <button type="button" class="nbt btn btn-danger" @onclick="ShowCreateForm">Danger</button>
+            </AuthorizeView>
         </div>
         <div class="FAQtext">
             @if (PatchnotesList != null && PatchnotesList.Count > 0)
@@ -41,8 +43,10 @@
                         {
                             <a class="list-group-item list-group-item-action" @onclick="() => ShowSelectedPatchnote(patchnote)">
                                 <span>@patchnote.Title</span>
+                                <AuthorizeView Roles="Administrator">
                                 <button class="btn btn-danger btn-sm" @onclick="() => ShowEditForm(patchnote)">Edit</button>
                                 <button class="btn btn-danger btn-sm" @onclick="() => RemovePatchnote(patchnote)">Remove</button>
+                                </AuthorizeView>
                             </a>
 
                         }

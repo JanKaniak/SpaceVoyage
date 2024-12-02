@@ -2,6 +2,7 @@ using SpaceVoyage.Components;
 using Microsoft.EntityFrameworkCore;
 using SpaceVoyage.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,22 @@ var UserConnectionString = builder.Configuration.GetConnectionString("UserDB");
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "auth_token";
+        options.LoginPath = "/login";
+        options.Cookie.MaxAge = TimeSpan.FromMinutes(60);
+        options.AccessDeniedPath = "/accessDenied";
+    });
 
 builder.Services.AddDbContextFactory<PatchnoteDataContext>(options => options.UseSqlite(PatchnoteConnectionString));
 builder.Services.AddDbContextFactory<UserDataContext>(options => options.UseSqlite(UserConnectionString));
+
+
+builder.Services.AddAuthorization();
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -28,7 +42,8 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
-
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

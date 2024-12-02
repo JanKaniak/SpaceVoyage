@@ -2,7 +2,7 @@
 using SpaceVoyage.Data;
 using System.Diagnostics;
 
-namespace SpaceVoyage.Components.Pages
+namespace SpaceVoyage.Components.Pages.Main
 {
     public partial class News
     {
