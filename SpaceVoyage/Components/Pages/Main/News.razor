@@ -12,7 +12,7 @@
         <input type="text" class="form-control" id="titleForm" @bind="@NewPatchnote.Title">
     </div>
 
-    <div class="mb-3">https://www.youtube.com/shorts/nexOa7FC1Wo
+    <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
         <textarea class="form-control" id="descriptionForm" rows="10" @bind="@NewPatchnote.Description"></textarea>
     </div>
@@ -26,33 +26,38 @@
     <div class="container text-center">
         <div class="row">
             <AuthorizeView Roles="Administrator">
-                <button type="button" class="nbt btn btn-danger" @onclick="ShowCreateForm">Danger</button>
+                <button type="button" class="btn btn-danger" @onclick="ShowCreateForm">Create</button>
             </AuthorizeView>
         </div>
         <div class="FAQtext">
             @if (PatchnotesList != null && PatchnotesList.Count > 0)
             {
                 <div class="list-group">
-                    @if (!@EditShowForm && !ShowPatchnote)
+                    @if (!EditShowForm && !ShowPatchnote)
                     {
                         <p>Patch notes</p>
                     }
                     @foreach (var patchnote in PatchnotesList)
                     {
-                        if (!@EditShowForm && !ShowPatchnote)
+                        @if (!EditShowForm && !ShowPatchnote)
                         {
-                            <a class="list-group-item list-group-item-action" @onclick="() => ShowSelectedPatchnote(patchnote)">
+                            <div class="showPatchnotesList">
+                            <a class="list-group-item list-group-item-action patchnote" @onclick="() => ShowSelectedPatchnote(patchnote)">
                                 <span>@patchnote.Title</span>
-                                <AuthorizeView Roles="Administrator">
-                                <button class="btn btn-danger btn-sm" @onclick="() => ShowEditForm(patchnote)">Edit</button>
-                                <button class="btn btn-danger btn-sm" @onclick="() => RemovePatchnote(patchnote)">Remove</button>
-                                </AuthorizeView>
                             </a>
+                                <AuthorizeView Roles="Administrator">
+                                    <div class="adminButtonsEditRemove" role="group" aria-label="Basic example">
+                                        <button class="btn btn-danger btn-sm" @onclick="() => ShowEditForm(patchnote)">Edit</button>
+                                        <button class="btn btn-danger btn-sm" @onclick="() => RemovePatchnote(patchnote)">Remove</button>
+                                    </div>
+                                </AuthorizeView>
+                             </div>
+                            
 
                         }
-                        else if (@EditShowForm && !ShowPatchnote)
+                        else if (EditShowForm && !ShowPatchnote)
                         {
-                             if (PatchnoteToUpdate != null && PatchnoteToUpdate.Id == patchnote.Id)
+                             @if (PatchnoteToUpdate != null && PatchnoteToUpdate.Id == patchnote.Id)
                                 {
                                     <div class="mb-3">
                                         <label for="exampleFormControlInput1" class="form-label">Email address</label>
@@ -70,7 +75,7 @@
 
                                     <button type="button" class="nbt btn btn-danger" @onclick="UpdatePatchnote">Yes</button>
                              }
-                        } else {
+                        } else if (!EditShowForm && ShowPatchnote){
                             if (PatchnoteToShow != null && PatchnoteToShow.Id == patchnote.Id) {
                                 <p>@PatchnoteToShow.Title</p>
                                 <p>@PatchnoteToShow.ReleaseDate</p>

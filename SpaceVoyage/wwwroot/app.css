@@ -103,6 +103,15 @@ body {
     justify-self: center;
 }
 
+.patchnote {
+    grid-area: pn;
+}
+
+.adminButtonsEditRemove {
+    grid-area: er;
+    
+}
+
 .gridContainerFAQnNews.info {
     margin-top: 25%;
 }
@@ -408,7 +417,7 @@ body {
         grid-template-columns: repeat(5,1fr);
         grid-template-rows: 20% auto auto;
         grid-template-areas:
-            ". . nbt . ."
+            ". nbt . . ."
             ". fn fn fn ."
             ". in in in .";
         gap: 5px;
@@ -419,5 +428,26 @@ body {
         height: 70%;
         width: 30%;
         mix-blend-mode: multiply;
+    }
+
+    .loginForm {
+        width: 30%;
+        margin:auto;
+        background-color: wheat;
+        padding: 10px;
+        border-radius: 15px;
+    }
+
+    .adminButtons {
+        justify-content: right;
+    }
+
+    .showPatchnotesList {
+        margin: 5px;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        grid-template-rows: 20% auto auto;
+        grid-template-areas:
+            "pn pn er er";
     }
 }

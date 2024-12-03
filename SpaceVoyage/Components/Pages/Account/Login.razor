@@ -1,5 +1,4 @@
 ﻿@page "/login"
-@rendermode InteractiveServer
 @using SpaceVoyage.Models.ViewModels
 @using SpaceVoyage.Data
 @using Microsoft.EntityFrameworkCore
@@ -8,25 +7,26 @@
 
 <h1>UserName</h1>
 
-<form>
-    <EditForm Model="@ViewModel" OnValidSubmit="Authentification" FormName="LoginForm">
-        <div class="container bg-white">
+<EditForm Model="@ViewModel" OnValidSubmit="Authentification" FormName="LoginForm">
+    <DataAnnotationsValidator/>
+        <div class="loginForm">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">User name</label>
-            <input type="text" class="form-control" id="InputUsername" aria-describedby="emailHelp" @bind-value="ViewModel.UserName" required name="Enter your user name!">
+            <InputText class="form-control" @bind-value="ViewModel.UserName" placeholder="Username"/>
             <ValidationMessage For="() => ViewModel.UserName"></ValidationMessage>
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="InputPassword" @bind-value="ViewModel.Password" required name="Enter your password!">
+                <InputText class="form-control" @bind-value="ViewModel.Password" placeholder="Password" type="password"/>
             <ValidationMessage For="() => ViewModel.Password"></ValidationMessage>
             <div id="emailHelp" class="form-text">Your account details including your user name and password was unfortunately sold to Meta</div>
         </div>
         <div class="mb-3">
             <div id="Error" class="form-text">@ErrorMessage</div>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="d-grid gap-2 loginButton">
+            <button type="submit" class="btn btn-primary">Login</button>
         </div>
-    </EditForm>
-</form>
+        </div>
+</EditForm>
 

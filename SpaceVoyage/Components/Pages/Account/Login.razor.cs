@@ -32,7 +32,7 @@ namespace SpaceVoyage.Components.Pages.Account
   
             if (userAccount == null || userAccount.UserPassword != ViewModel.Password)
             {
-                ErrorMessage = $"Invalid password, correct password for user {ViewModel.UserName} is: {ViewModel.Password}";
+                ErrorMessage = $"Invalid password, correct password for user {ViewModel.UserName} is: {userAccount.UserPassword}";
                 return;
             }
 
@@ -44,13 +44,7 @@ namespace SpaceVoyage.Components.Pages.Account
 
             var identity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
-            if (HttpContext != null)
-            {
-                await HttpContext.SignInAsync(principal);
-            } else
-            {
-                return;
-            }
+            await HttpContext.SignInAsync(principal);
             NavigationManager.NavigateTo("/");
         }
     }
