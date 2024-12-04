@@ -445,9 +445,9 @@ body {
     .showPatchnotesList {
         margin: 5px;
         display: grid;
-        grid-template-columns: repeat(4,1fr);
+        grid-template-columns: repeat(3,1fr);
         grid-template-rows: 20% auto auto;
         grid-template-areas:
-            "pn pn er er";
+            "pn pn er";
     }
 }

@@ -17,6 +17,7 @@ namespace SpaceVoyage.Components.Pages.Main
         public Patchnote? PatchnoteToShow { get; set; }
         public int selectedId { get; set; }
         public List<Patchnote>? PatchnotesList { get; set; }
+        public string? ErrorMessage { get; set; }
         protected override async Task OnInitializedAsync()
         {
             CreateShowForm = false;
@@ -39,10 +40,11 @@ namespace SpaceVoyage.Components.Pages.Main
             {
                 context?.PatchNotes.Add(NewPatchnote);
                 context?.SaveChangesAsync();
+                
             }
-
             CreateShowForm = false;
             await ShowPatchnotes();
+
         }
 
 
